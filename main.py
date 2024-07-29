@@ -17,42 +17,54 @@ from PyQt6.QtWidgets import (QApplication, QWidget,
 from PyQt6.QtCore import Qt
 
 
-class Calculator(QWidget):
-    def __init__(self) -> None:
-        super().__init__()
-        self.button = None
-        self.textbox = None
+class Calculator:
 
-        self.setWindowTitle("calculator")
-        self.setGeometry(100, 100, 320, 400)
-        self.textbox_ui()
-        self.make_button()
+    class Widget(QWidget):
+        def __init__(self) -> None:
+            super().__init__()
+            self.button = None
+            self.textbox = None
 
-    def enter_Push(self) -> None:
-        print(self.textbox.text())
+            self.setWindowTitle("calculator")
+            self.setGeometry(100, 100, 320, 400)
+            self.textbox_ui()
+            self.make_button()
 
-    def textbox_ui(self) -> None:
-        self.textbox = QLineEdit("", self)
-        self.textbox.setGeometry(0, 0, 320, 30)
-        self.textbox.setStyleSheet(
+        def enter_push(self) -> None:
+            print(self.textbox.text())
 
-            "color: white;"
-            "background-color: black;"
-            "font-family: kaiti SC;"
-            "font-size: 20px;"
+        def textbox_ui(self) -> None:
+            self.textbox = QLineEdit("", self)
+            self.textbox.setGeometry(0, 0, 320, 30)
+            self.textbox.setStyleSheet(
 
-        )
-        self.textbox.returnPressed.connect(self.enter_Push)
-        # print(self.textbox)
+                "color: white;"
+                "background-color: black;"
+                "font-family: kaiti SC;"
+                "font-size: 20px;"
 
-    def make_button(self) -> None:
-        self.button = QPushButton("button", self)
-        self.button.setGeometry(0, 30, 80, 80)
-        print()
+            )
+            self.textbox.returnPressed.connect(self.enter_push)
+            # print(self.textbox)
+
+        def make_button(self) -> None:
+            self.button = QPushButton("button", self)
+            self.button.setGeometry(0, 30, 80, 80)
+
+    class Calculation:
+        def __init__(self, master) -> None:
+            super().__init__(master)
+            ...
+
+        def equal(self) -> None: ...
+
+
+def main():
+    PyQt_app = QApplication(sys.argv)
+    calc = Calculator.Widget()
+    calc.show()
+    PyQt_app.exec()
 
 
 if __name__ == "__main__":
-    PyQt_app = QApplication(sys.argv)
-    calc = Calculator()
-    calc.show()
-    PyQt_app.exec()
+    main()
