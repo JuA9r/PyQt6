@@ -7,6 +7,9 @@
 # import sys
 import sys
 
+# import math
+import math
+
 # import PyQt6
 from PyQt6.QtWidgets import (QApplication, QWidget,
                              QPushButton, QLineEdit)
@@ -14,18 +17,44 @@ from PyQt6.QtWidgets import (QApplication, QWidget,
 from PyQt6.QtCore import Qt
 
 
+# Input limit
+def test_char(string: any) -> bool:
+    if len(string) == 0:
+        return True
+
+    types: tuple[any, any] = (int, float)
+    for type_ in types:
+        try:
+            type_(string[-1])
+            return True
+        except ValueError:
+            continue
+
+    for c in [
+        "+", "-", "×", "÷", "=",
+        ".", "%", "(", ")", "^",
+        "/", "√", "!", "π", "e"
+    ]:
+        if string[-1] == c:
+            return True
+    return False
+
+
 class Calculator(QWidget):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
+        self.button = None
         self.textbox = None
+
         self.setWindowTitle("calculator")
         self.setGeometry(100, 100, 320, 400)
         self.textbox_ui()
+        self.make_button()
 
-    def enter_Push(self):
+    def enter_Push(self) -> None:
         print(self.textbox.text())
 
-    def textbox_ui(self):
+    def textbox_ui(self) -> None:
         self.textbox = QLineEdit("", self)
         self.textbox.setGeometry(0, 0, 320, 30)
         self.textbox.setStyleSheet(
@@ -38,6 +67,11 @@ class Calculator(QWidget):
         )
         self.textbox.returnPressed.connect(self.enter_Push)
         # print(self.textbox)
+
+    def make_button(self) -> None:
+        self.button = QPushButton("button", self)
+        self.button.setGeometry(0, 30, 80, 80)
+        print()
 
 
 if __name__ == "__main__":
