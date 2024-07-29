@@ -17,29 +17,6 @@ from PyQt6.QtWidgets import (QApplication, QWidget,
 from PyQt6.QtCore import Qt
 
 
-# Input limit
-def test_char(string: any) -> bool:
-    if len(string) == 0:
-        return True
-
-    types: tuple[any, any] = (int, float)
-    for type_ in types:
-        try:
-            type_(string[-1])
-            return True
-        except ValueError:
-            continue
-
-    for c in [
-        "+", "-", "×", "÷", "=",
-        ".", "%", "(", ")", "^",
-        "/", "√", "!", "π", "e"
-    ]:
-        if string[-1] == c:
-            return True
-    return False
-
-
 class Calculator(QWidget):
     def __init__(self) -> None:
         super().__init__()
